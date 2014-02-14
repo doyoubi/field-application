@@ -57,6 +57,7 @@ def display_list(request):
     return render(request, 'list.html',
                 {'page': page, 'title': u'校园文化活动露天场地申请'})
 
+
 @login_required
 def manage(request):
     org = request.user.organization
@@ -135,14 +136,6 @@ class ModifyView(View):
 def manager_approve(request):
     app_id = request.GET.get('id')
     app = get_object_or_404(PublicityApplication, id=app_id)
-    if not app.approved:
-        msg = check_publicity(
-            app.place,
-            app.start_date,
-            app.end_date,
-            app.time)
-        if msg:
-            return render(request, 'deny.html', {'message': msg})
     app.approved = not app.approved
     app.save()
     return HttpResponseRedirect(reverse('publicity:manage'))

@@ -183,14 +183,5 @@ class PublicityApplicationForm(forms.ModelForm):
             msg = u'展览时间不得超过3天'
             self._errors['end_date'] = self.error_class([msg])
             del self.cleaned_data['end_date']
-        #  检查场地是否已经存在通过的申请
-        msg = check_publicity(
-                self.cleaned_data['place'],
-                start_date,
-                end_date,
-                self.cleaned_data['time'])
-        if msg:
-            self._errors['time'] = self.error_class([msg])
-            return super(PublicityApplicationForm, self).clean()
         return super(PublicityApplicationForm, self).clean()
 
